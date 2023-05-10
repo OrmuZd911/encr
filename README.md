@@ -7,7 +7,7 @@ In order to encrypt files, we need two things: the encr.py file and a key.key fi
 
 2) Place the encr.py file inside that directory.
 
-3) To generate a key, run the encr.py file, then enter "get key 1234". Note that 1234 can be replaced by any password you wish.
+3) To generate a key, run the encr.py file using Python, then enter "get key 1234". Note that 1234 can be replaced by any password you wish.
 
 4) You will notice that a key.key file is generated within that directory. Do not lose this file.
 
