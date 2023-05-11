@@ -36,4 +36,4 @@ Decrypts all files within the same directory as the encr.py file.
 ### exit
 Closes the window.
 
-# I AM NOT RESPONSIBLE FOR ANY DATA LOSS. DO NOT LOSE THE KEY ON GOD FR
+# I AM NOT RESPONSIBLE FOR ANY DATA LOSS. FEATURES ARE EXPERIMENTAL. AND DO NOT LOSE THE KEY ON GOD FR
