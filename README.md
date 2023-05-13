@@ -33,9 +33,9 @@ Generates a key.key file with specified password, necessary for encryption or de
 Encrypts all files within the same directory as the encr.py file. The key must be in the same directory as the files.
 ### decrypt [password]
 Decrypts all files within the same directory as the encr.py file. The key must be in the same directory as the files.
-### encrypt key select
+### encrypt select key
 Encryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories.
-### decrypt key select
+### decrypt select key
 Decryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories.
 ### change dir
 Brings up a file explorer to change the target directory.
