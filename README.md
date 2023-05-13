@@ -34,12 +34,18 @@ Generates a key.key file with specified password in the target directory, necess
 Encrypts all files within the same directory as the encr.py file. The key must be in the same directory as the files.
 ### decrypt [password]
 Decrypts all files within the same directory as the encr.py file. The key must be in the same directory as the files.
+### change dir
+Brings up a file explorer to change the target directory.
 ### encrypt select key
 Encryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories. In this case, any key name should work, as long as it has the .key extension.
 ### decrypt select key
 Decryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories. In this case, any key name should work, as long as it has the .key extension.
-### change dir
-Brings up a file explorer to change the target directory.
+### del self
+Deletes itself for quick disposal.
+### del keys
+(DANGER) Deletes all keys in the target directory.
+### del files
+(DANGER) Deletes all files in target directory.
 ### x
 Closes the window.
 
