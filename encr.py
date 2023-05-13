@@ -1,4 +1,5 @@
 from cryptography.fernet import Fernet
+from tkinter import filedialog
 import tkinter as tk
 import os
 import time
@@ -9,7 +10,7 @@ currentDirectory = os.getcwd()
 def browseFiles():
     root = tk.Tk()
     root.geometry("10x10")
-    filepath = tk.filedialog.askopenfilename(title='select file')
+    filepath = filedialog.askopenfilename(title='select file')
     root.destroy()
     if filepath[-4:] != '.key':
         print("unsupported file type.\n") # key not .key extension
@@ -161,7 +162,7 @@ while(True):
     if inp == "change dir":
         root = tk.Tk()
         root.geometry("10x10")
-        currentDirectory = tk.filedialog.askdirectory(title='select directory')
+        currentDirectory = filedialog.askdirectory(title='select directory')
         root.destroy()
         continue
     if inp == "del keys":
