@@ -43,9 +43,9 @@ Decryption using key that is located outside the target directory, this brings u
 ### *del self*
 Deletes itself for quick disposal.
 ### *del keys*
-(DANGER) Deletes all keys in the target directory.
+**(DANGER)** Deletes all keys in the target directory.
 ### *del all*
-(DANGER) Deletes all files in target directory.
+**(DANGER)** Deletes all files in target directory.
 ### *e*
 Closes the window.
 
