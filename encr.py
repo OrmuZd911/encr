@@ -173,12 +173,18 @@ while(True):
                 c += 1
         print(f"Deleted {c} keys in this directory.\n")
         continue
-    if inp == "del all":
+    if inp == "del files":
         c = len(files)
         for file in files:
             os.remove(currentDirectory + "/" + file)
         print(f"Deleted {c} files in this directory.\n")
     if inp == "del self":
+        os.remove(__file__)
+        break
+    if inp == "del all":
+        for file in os.listdir(currentDirectory):
+            if file != os.path.basename(__file__):
+                os.remove(currentDirectory + "/" + file)
         os.remove(__file__)
         break
     if inp == "x":
