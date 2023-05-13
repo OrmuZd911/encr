@@ -25,7 +25,7 @@ Any other format would not work, as well as renaming the key.key file.
 
 The password entered for encryption or decryption should match the one within the key.key file, as an added security feature.
 
-## COMMANDS
+# COMMANDS
 ### *list files*
 Lists all the files that will be processed during encryption/decryption. Does not include sub-directories.
 ### *get key [password]*
