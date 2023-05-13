@@ -18,8 +18,8 @@ In order to encrypt files, we need two things: the encr.py file and a key.key fi
 Ofcourse, without the key.key file, encrypting or decrypting will not be possible, so you better keep the key.key file somewhere safe if you intend to hide it, as losing the key.key file while having your files encrypted would render them completely unrecoverable. 
 
 The key.key file has the following 2-line format:
-<key>
-<password>
+[key]
+[password]
 Any other format would not work, as well as renaming the key.key file.
 
 The password entered for encryption or decryption should match the one within the key.key file, as an added security feature.
@@ -34,9 +34,9 @@ Encrypts all files within the same directory as the encr.py file. The key must b
 ### decrypt [password]
 Decrypts all files within the same directory as the encr.py file. The key must be in the same directory as the files.
 ### encrypt select key
-Encryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories.
+Encryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories. In this case, any key name should work, as long as it has the .key extension.
 ### decrypt select key
-Decryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories.
+Decryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories. In this case, any key name should work, as long as it has the .key extension.
 ### change dir
 Brings up a file explorer to change the target directory.
 ### x
