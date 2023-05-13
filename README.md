@@ -30,10 +30,16 @@ Lists all the files that will be processed during encryption/decryption. Does no
 ### get key [password]
 Generates a key.key file with specified password, necessary for encryption or decryption. If no password is entered, a randomly-generated 6-digit PIN will be created for you.
 ### encrypt [password]
-Encrypts all files within the same directory as the encr.py file.
+Encrypts all files within the same directory as the encr.py file. The key must be in the same directory as the files.
 ### decrypt [password]
-Decrypts all files within the same directory as the encr.py file.
-### exit
+Decrypts all files within the same directory as the encr.py file. The key must be in the same directory as the files.
+### encrypt key select
+Encryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories.
+### decrypt key select
+Decryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories.
+### change dir
+Brings up a file explorer to change the target directory.
+### x
 Closes the window.
 
 # I AM NOT RESPONSIBLE FOR ANY DATA LOSS. FEATURES ARE EXPERIMENTAL. AND DO NOT LOSE THE KEY ON GOD FR
