@@ -49,4 +49,9 @@ Deletes itself for quick disposal.
 ### *e*
 Closes the window.
 
-# I AM NOT RESPONSIBLE FOR ANY DATA LOSS. FEATURES ARE EXPERIMENTAL. AND DO NOT LOSE THE KEY ON GOD FR
+# I AM NOT RESPONSIBLE FOR ANY DATA LOSS.
+## some things to take note of:
+#### don't lose keys on god fr
+#### please be mindful of your target directory
+#### always use 'list files' to double check which files you are about to encrypt
+#### large files (above 1GB) have not been tested thorougly. encrypt at your own risk.
