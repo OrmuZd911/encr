@@ -29,7 +29,7 @@ The password entered for encryption or decryption should match the one within th
 ### list files
 Lists all the files that will be processed during encryption/decryption. Does not include sub-directories.
 ### get key [password]
-Generates a key.key file with specified password, necessary for encryption or decryption. If no password is entered, a randomly-generated 6-digit PIN will be created for you.
+Generates a key.key file with specified password in the target directory, necessary for encryption or decryption. If no password is entered, a randomly-generated 6-digit PIN will be created for you.
 ### encrypt [password]
 Encrypts all files within the same directory as the encr.py file. The key must be in the same directory as the files.
 ### decrypt [password]
