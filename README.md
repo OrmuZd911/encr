@@ -26,7 +26,9 @@ Any other format would not work, as well as renaming the key.key file.
 The password entered for encryption or decryption should match the one within the key.key file, as an added security feature.
 
 # COMMANDS
-### *list files*
+```
+list files
+```
 Lists all the files that will be processed during encryption/decryption. Does not include sub-directories.
 ### *get key [password]*
 Generates a key.key file with specified password in the target directory, necessary for encryption or decryption. If no password is entered, a randomly-generated 6-digit PIN will be created for you.
