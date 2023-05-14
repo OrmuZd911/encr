@@ -26,30 +26,53 @@ Any other format would not work, as well as renaming the key.key file.
 The password entered for encryption or decryption should match the one within the key.key file, as an added security feature.
 
 # COMMANDS
-``` list files
+``` 
+list files
 ```
 Lists all the files that will be processed during encryption/decryption. Does not include sub-directories.
-```get key [password]```
+```
+get key <password>
+```
 Generates a key.key file with specified password in the target directory, necessary for encryption or decryption. If no password is entered, a randomly-generated 6-digit PIN will be created for you.
-### *encrypt [password]*
+```
+encrypt <password>
+```
 Encrypts all files in target directory. The key must also be in the same target directory.
-### *decrypt [password]*
+```
+decrypt <password>
+```
 Decrypts all files in target directory. The key must also be in the same target directory.
-### *change dir*
+```
+change dir
+```
 Brings up a file explorer to change the target directory.
-### *encrypt select key*
+```
+encrypt select key
+```
 Encryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories. In this case, any key name should work, as long as it has the .key extension.
-### *decrypt select key*
+```
+decrypt select key
+```
 Decryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories. In this case, any key name should work, as long as it has the .key extension.
-### *del self*
+```
+del self
+```
 Deletes itself for quick disposal.
-### *del keys*
+```
+del keys
+```
 **(DANGER)** Deletes all keys in the target directory.
-### *del files*
+```
+del files
+```
 **(DANGER)** Deletes all target files. Excludes keys and itself.
-### *del all*
+```
+del all
+```
 **(DANGER)** Deletes everything in target directory, even keys and itself.
-### *e*
+```
+e
+```
 Closes the window.
 
 # I AM NOT RESPONSIBLE FOR ANY DATA LOSS.
