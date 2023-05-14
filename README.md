@@ -76,7 +76,7 @@ e
 Closes the window.
 
 # I AM NOT RESPONSIBLE FOR ANY DATA LOSS.
-## some things to take note of:
+### so here are some things to take note of:
 #### don't lose keys on god fr
 #### please be mindful of your target directory
 #### always use 'list files' to double check which files you are about to encrypt
