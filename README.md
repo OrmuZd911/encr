@@ -62,6 +62,10 @@ Encryption using key that is located outside the target directory, this brings u
 decrypt select key
 ```
 Decryption using key that is located outside the target directory, this brings up file explorer for you to find the key in other directories. In this case, any key name should work, as long as it has the .key extension.
+``` 
+list files decr
+```
+In a directory full of encrypted files, this lists the true name of all these files by decrypting the file names only. This requires a key, so if a key is not already in the target directory, a file explorer will be opened to manually select the key. This does not encrypt/decrypt any file.
 ```
 del self
 ```
