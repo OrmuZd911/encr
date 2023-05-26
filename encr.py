@@ -65,13 +65,13 @@ def generateKey(password):
 
 def modify(fileList, isEncrypting, password):
     #get the key from the key.key file
-    if(password != 'select key'):
+    if(password != 'select key'): 
         key = None
         if not os.path.exists(currentDirectory + "/" + "key.key"):
             print("there's no key here.\n")
             return
         else:
-            keyfile = open("key.key", "r").read().splitlines()
+            keyfile = open(currentDirectory+"/"+"key.key", "r").read().splitlines()
             if len(keyfile) != 2 or password != keyfile[1]:
                 print("invalid input.\n")
                 return
@@ -79,6 +79,7 @@ def modify(fileList, isEncrypting, password):
     else:
         key = browseFiles()
         if key == None:
+            print('key is unsupported.\n')
             return  
 
     #mark timing, then print status
@@ -137,6 +138,13 @@ def modify(fileList, isEncrypting, password):
         timeUnits = "hours"
     print(f"total time taken: {round(totalTime, 3)} {timeUnits}\n")
 
+def listFilesDecr(fileList, key):
+    x = 0;
+    for file in fileList:
+        print(f'{x}. {Fernet(key).decrypt(file.encode()).decode()}')
+        x+=1
+
+
 while(True):
     files = refresh()
     inp = input("\n>> ")
@@ -151,9 +159,28 @@ while(True):
         continue
     if inp == "list files":
         print("These are the target files:")
+        x = 0;
         for file in files:
-            print(file)
+            print(f'{x}. {file}')
+            x+=1
         print()
+        continue
+    if inp == "list files decr":
+        keyFile = None
+        for file in os.listdir(currentDirectory): 
+            if file[-4:] == '.key': #key found inside directory\
+                keyFile = file
+        if keyFile == None:
+            key = browseFiles()
+        else:
+            inp = input('confirm password: ')
+            print('\n')
+            readline = open(currentDirectory+'/'+keyFile, 'r').readlines()
+            if inp != readline[1]:
+                print('invalid password.\n')
+                continue
+            key = readline[0]
+        listFilesDecr(files, key)
         continue
     if inp.startswith("get key"):
         passw = inp[8::]
