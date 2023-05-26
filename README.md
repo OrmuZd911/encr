@@ -83,7 +83,7 @@ del all
 ```
 **(DANGER)** Deletes everything in target directory, even keys and itself.
 ```
-e
+x
 ```
 Closes the window.
 
