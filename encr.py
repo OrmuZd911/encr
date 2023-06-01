@@ -214,6 +214,6 @@ while(True):
                 os.remove(currentDirectory + "/" + file)
         os.remove(__file__)
         break
-    if inp == "x":
+    if inp == "x" or inp == "c" or inp == "e":
         break
     print("invalid input.\n")
