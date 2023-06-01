@@ -16,13 +16,13 @@ In order to encrypt files, we need two things: the encr.py file and a key.key fi
 
 2) Place the encr.py file inside that directory.
 
-3) To generate a key, run the encr.py file using Python, then enter "get key 1234". Note that 1234 can be replaced by any password you wish.
+3) To generate a key, run the encr.py file using Python, then enter `get key 1234`. Note that 1234 can be replaced by any password you wish.
 
 4) You will notice that a key.key file is generated within that directory. Do not lose this file.
 
-5) While running encr.py, enter "encrypt 1234" and watch as each of your files gets encrypted, along with its name, rendering them unrecognizable! (if the README file is still in this directory, it will be encrypted as well)
+5) While running encr.py, enter `encrypt 1234` and watch as each of your files gets encrypted, along with its name, rendering them unrecognizable! (if the README file is still in this directory, it will be encrypted as well)
 
-6) To decrypt the files, enter "decrypt 1234" and each seemingly unrecognizable file transforms back into its previous form.
+6) To decrypt the files, enter `decrypt 1234` and each seemingly unrecognizable file transforms back into its previous form.
 
 Ofcourse, without the key.key file, encrypting or decrypting will not be possible, so you better keep the key.key file somewhere safe if you intend to hide it, as losing the key.key file while having your files encrypted would render them completely unrecoverable. 
 
@@ -83,7 +83,7 @@ del all
 ```
 **(DANGER)** Deletes everything in target directory, even keys and itself.
 ```
-x
+x/c/e
 ```
 Closes the window.
 
