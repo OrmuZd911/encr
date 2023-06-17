@@ -24,11 +24,11 @@ def browseFiles():
     else:
         print("unable to retrieve key.")
         return None
-    
+
 def refresh():
     files = []
     for file in os.listdir(currentDirectory):
-        if file != os.path.basename(__file__) and file != "key.key" and os.path.isfile(currentDirectory + "/" + file) and file[-4:] != ".ini":
+        if not file.startswith(os.path.basename(__file__)[:-2]) and file != "key.key" and os.path.isfile(currentDirectory + "/" + file) and file[-4:] != ".ini":
             files.append(file)
     print(f"Target directory: {currentDirectory}")
     print(f"{len(files)} files in directory:")
@@ -144,11 +144,16 @@ def listFilesDecr(fileList, key):
         print(f'{x}. {Fernet(key).decrypt(file.encode()).decode()}')
         x+=1
 
-
 while(True):
     files = refresh()
     inp = input("\n>> ")
     print()
+    if inp == "show dir":
+        root = tk.Tk()
+        root.geometry("10x10")
+        filedialog.asksaveasfilename(title="showing current target file", initialdir=currentDirectory)
+        root.destroy()
+        continue
     if inp.startswith("encrypt"):
         password = inp[8::]
         modify(files, True, password)
@@ -189,7 +194,7 @@ while(True):
     if inp == "change dir":
         root = tk.Tk()
         root.geometry("10x10")
-        currentDirectory = filedialog.askdirectory(title='select directory')
+        currentDirectory = filedialog.askdirectory(title='select directory', initialdir=currentDirectory)
         root.destroy()
         continue
     if inp == "del keys":
