@@ -4,31 +4,19 @@ import tkinter as tk
 import os
 import time
 import random
+import sys
+from colorama import Fore, Style
+import colorama
+colorama.init()
 
 currentDirectory = os.getcwd()
-
-def browseFiles():
-    root = tk.Tk()
-    root.geometry("10x10")
-    filepath = filedialog.askopenfilename(title='select file')
-    root.destroy()
-    if filepath[-4:] != '.key':
-        print("unsupported file type.\n") # key not .key extension
-        return None
-    file = open(filepath, 'r')
-    conf = input("confirm password: ")
-    filelines = file.readlines()
-    if conf == filelines[1]:
-        print()
-        return filelines[0]
-    else:
-        print("unable to retrieve key.")
-        return None
+globalKey = "PjUYNENTBSGja15yQdPSzwNls-PKBWPRBrHDyxCdsFY="
 
 def refresh():
     files = []
     for file in os.listdir(currentDirectory):
-        if not file.startswith(os.path.basename(__file__)[:-2]) and file != "key.key" and os.path.isfile(currentDirectory + "/" + file) and file[-4:] != ".ini":
+        #does not allow encr.files, key.key files, 
+        if not file.startswith(os.path.basename(__file__)[:-2]) and not file.endswith(".key") and os.path.isfile(currentDirectory + "/" + file) and file[-4:] != ".ini":
             files.append(file)
     print(f"Target directory: {currentDirectory}")
     print(f"{len(files)} files in directory:")
@@ -57,21 +45,53 @@ def generateKey(password):
             string.append(str(random.randint(0, 9)))
         password = ''.join(string)
     if not os.path.exists(currentDirectory + "/" + "key.key"):
-        print(f"key.key file generated with password {password}.\n")
         open(currentDirectory + "/" + "key.key", "wb").write(Fernet.generate_key()) 
         open(currentDirectory + "/" + "key.key", "a").write(f"\n{password}")
+        keycontents = open(currentDirectory + "/" + "key.key", "rb").read()
+        modifiedContents = Fernet(globalKey).encrypt(keycontents)
+        open(currentDirectory + "/" + "key.key", "wb").write(modifiedContents)
+        print(f"key.key file generated with password {password}.\n")
     else:
-        print("key.key already exists in this directory.\n")
+        print(".key file already exists in this directory.\n")
+
+def readKey(address):
+    contents = open(address, "rb").read()
+    decrContents = Fernet(globalKey).decrypt(contents)
+    return decrContents.decode().splitlines()
+
+def browseFiles():
+    root = tk.Tk()
+    root.geometry("10x10")
+    filepath = filedialog.askopenfilename(title='select key file')
+    root.destroy()
+    if filepath[-4:] != '.key':
+        print("unsupported file type.\n") # key not .key extension
+        return None
+    keyfile = readKey(filepath)
+    conf = input("confirm password: ")
+    if conf == keyfile[1]:
+        print()
+        return keyfile[0]
+    else:
+        print("unable to retrieve key.")
+        return None
+    
+def keyName():
+    for file in os.listdir(currentDirectory):
+        if(file.endswith('.key')):
+            return file
+    return "[]"
 
 def modify(fileList, isEncrypting, password):
     #get the key from the key.key file
-    if(password != 'select key'): 
+    if(password != 'select key'):
         key = None
-        if not os.path.exists(currentDirectory + "/" + "key.key"):
+        if not os.path.exists(currentDirectory + "/" + keyName()):
             print("there's no key here.\n")
             return
         else:
-            keyfile = open(currentDirectory+"/"+"key.key", "r").read().splitlines()
+            #key exists!
+            keyfile = readKey(currentDirectory + "/" + keyName())
             if len(keyfile) != 2 or password != keyfile[1]:
                 print("invalid input.\n")
                 return
@@ -79,8 +99,7 @@ def modify(fileList, isEncrypting, password):
     else:
         key = browseFiles()
         if key == None:
-            print('key is unsupported.\n')
-            return  
+            return
 
     #mark timing, then print status
     TT = time.time()
@@ -111,17 +130,36 @@ def modify(fileList, isEncrypting, password):
             contents = thefile.read() # read contents
 
         if isEncrypting:
-            contents_modified = Fernet(key).encrypt(contents) # encrypt or decrypt contents using the key
+            try:    
+                contents_modified = Fernet(key).encrypt(contents) # encrypt or decrypt contents using the key
+            except:
+                print(Fore.RED + "DATA ENCRYPTION ERROR.\n" + Style.RESET_ALL)
+                continue
         else:
-            contents_modified = Fernet(key).decrypt(contents)
+            try:
+                contents_modified = Fernet(key).decrypt(contents)
+            except:
+                print(Fore.RED + "DATA DECRYPTION ERROR.\n" + Style.RESET_ALL)
+                print(Style.RESET_ALL)
+                continue
 
         with open(currentDirectory + "/" + file, "wb") as thefile: # open file, write binary mode
             thefile.write(contents_modified) #write the modified contents into file
 
         if isEncrypting:
-            os.rename(currentDirectory + "/" + file, currentDirectory + "/" + Fernet(key).encrypt(file.encode()).decode())
+            try:
+                os.rename(currentDirectory + "/" + file, currentDirectory + "/" + Fernet(key).encrypt(file.encode()).decode())
+            except:
+                print(Fore.RED + "NAME ENCRYPTION ERROR.\n" + Style.RESET_ALL)
+                print(Style.RESET_ALL)
+                continue
         else:
-            os.rename(currentDirectory + "/" + file, currentDirectory + "/" + Fernet(key).decrypt(file.encode()).decode())
+            try:
+                os.rename(currentDirectory + "/" + file, currentDirectory + "/" + Fernet(key).decrypt(file.encode()).decode())
+            except:
+                print(Fore.RED + "NAME DECRYPTION ERROR.\n" + Style.RESET_ALL)
+                print(Style.RESET_ALL)
+                continue
 
         print(f"files processed: {count}/{len(fileList)}")
         print(f"time taken: {round(time.time() - t, 4)} seconds\n")
@@ -139,10 +177,12 @@ def modify(fileList, isEncrypting, password):
     print(f"total time taken: {round(totalTime, 3)} {timeUnits}\n")
 
 def listFilesDecr(fileList, key):
+    #translate filenames only
     x = 0;
     for file in fileList:
         print(f'{x}. {Fernet(key).decrypt(file.encode()).decode()}')
         x+=1
+    print()
 
 while(True):
     files = refresh()
@@ -173,9 +213,10 @@ while(True):
     if inp == "list files decr":
         keyFile = None
         for file in os.listdir(currentDirectory): 
-            if file[-4:] == '.key': #key found inside directory\
+            if file.endswith('.key'): #key found inside directory
                 keyFile = file
         if keyFile == None:
+            print("no key found here. opening file explorer.\n")
             key = browseFiles()
         else:
             inp = input('confirm password: ')
@@ -194,13 +235,17 @@ while(True):
     if inp == "change dir":
         root = tk.Tk()
         root.geometry("10x10")
-        currentDirectory = filedialog.askdirectory(title='select directory', initialdir=currentDirectory)
+        cd = filedialog.askdirectory(title='select directory', initialdir=currentDirectory)
+        if cd == '':
+            print("no directory selected.\n")
+            continue
+        currentDirectory = cd
         root.destroy()
         continue
     if inp == "del keys":
         c = 0
         for file in os.listdir(currentDirectory):
-            if file[-4::] == ".key":
+            if file.endswith(".key"):
                 os.remove(currentDirectory + "/" + file)
                 c += 1
         print(f"Deleted {c} keys in this directory.\n")
@@ -220,5 +265,5 @@ while(True):
         os.remove(__file__)
         break
     if inp == "x" or inp == "c" or inp == "e":
-        break
+        sys.exit()
     print("invalid input.\n")
