@@ -1,5 +1,5 @@
 # encr
-## encr.exe is a simple tool to encrypt folders of files.
+## encr.exe is a simple tool to encrypt files.
 Note that the Python file in the repository is only to show the Python code within. Unless you are interested, it can be deleted.
 
 In order to encrypt files, we only need encr.exe and a .key file generated with encr.exe.
