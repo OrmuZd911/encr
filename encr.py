@@ -9,6 +9,26 @@ from colorama import Fore, Style
 import colorama
 colorama.init()
 
+print(
+    """
+     ___           ___           ___           ___     
+    /\  \         /\__\         /\  \         /\  \    
+   /::\  \       /::|  |       /::\  \       /::\  \   
+  /:/\:\  \     /:|:|  |      /:/\:\  \     /:/\:\  \  
+ /::\~\:\  \   /:/|:|  |__   /:/  \:\  \   /::\~\:\  \ 
+/:/\:\ \:\__\ /:/ |:| /\__\ /:/__/ \:\__\ /:/\:\ \:\__\\
+\:\~\:\ \/__/ \/__|:|/:/  / \:\  \  \/__/ \/_|::\/:/  /
+ \:\ \:\__\       |:/:/  /   \:\  \          |:|::/  / 
+  \:\ \/__/       |::/  /     \:\  \         |:|\/__/  
+   \:\__\         /:/  /       \:\__\        |:|  |    
+    \/__/         \/__/         \/__/         \|__|  
+
+version 1.0
+Made by Dimas Rizky
+https://github.com/desolaterobot/encr
+    """
+)
+
 currentDirectory = os.getcwd()
 globalKey = "PjUYNENTBSGja15yQdPSzwNls-PKBWPRBrHDyxCdsFY="
 
@@ -73,7 +93,7 @@ def browseFiles():
         print()
         return keyfile[0]
     else:
-        print("unable to retrieve key.")
+        print("unable to retrieve key.\n")
         return None
     
 def keyName():
@@ -217,8 +237,8 @@ while(True):
             key = browseFiles()
         else:
             inp = input('confirm password: ')
-            print('\n')
-            readline = open(currentDirectory+'/'+keyFile, 'r').readlines()
+            print()
+            readline = readKey(currentDirectory+'/'+keyFile)
             if inp != readline[1]:
                 print('invalid password.\n')
                 continue
