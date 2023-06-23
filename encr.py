@@ -140,7 +140,6 @@ def modify(fileList, isEncrypting, password):
                 contents_modified = Fernet(key).decrypt(contents)
             except:
                 print(Fore.RED + "DATA DECRYPTION ERROR.\n" + Style.RESET_ALL)
-                print(Style.RESET_ALL)
                 continue
 
         with open(currentDirectory + "/" + file, "wb") as thefile: # open file, write binary mode
@@ -151,14 +150,12 @@ def modify(fileList, isEncrypting, password):
                 os.rename(currentDirectory + "/" + file, currentDirectory + "/" + Fernet(key).encrypt(file.encode()).decode())
             except:
                 print(Fore.RED + "NAME ENCRYPTION ERROR.\n" + Style.RESET_ALL)
-                print(Style.RESET_ALL)
                 continue
         else:
             try:
                 os.rename(currentDirectory + "/" + file, currentDirectory + "/" + Fernet(key).decrypt(file.encode()).decode())
             except:
                 print(Fore.RED + "NAME DECRYPTION ERROR.\n" + Style.RESET_ALL)
-                print(Style.RESET_ALL)
                 continue
 
         print(f"files processed: {count}/{len(fileList)}")
