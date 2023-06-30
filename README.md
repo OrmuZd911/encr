@@ -78,7 +78,7 @@ x/c/e
 Closes the window.
 
 # ERRORS
-### If you get an ENCRYPTION ERROR in red on one of the files, this might mean that you have encrypted the file more than once. While SOME files are able to be encrypted more than once, others may give errors. To tackle this, decrypt all files back to their initial state, then make sure you only encrypt everything ONCE.
+### If you get an ENCRYPTION ERROR in red on one of the files, this might mean that you have encrypted the file more than once. While SOME files are able to be encrypted more than once, others may give errors. To tackle this, decrypt all files back to their initial state, then make sure you only encrypt everything only once at a time.
 
 # I AM NOT RESPONSIBLE FOR ANY DATA LOSS.
 ### so here are some things to take note of:
