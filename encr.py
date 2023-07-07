@@ -10,8 +10,7 @@ import colorama
 colorama.init()
 
 print(
-    """
-     ___           ___           ___           ___     
+"""     ___           ___           ___           ___     
     /\  \         /\__\         /\  \         /\  \    
    /::\  \       /::|  |       /::\  \       /::\  \   
   /:/\:\  \     /:|:|  |      /:/\:\  \     /:/\:\  \  
@@ -23,7 +22,6 @@ print(
    \:\__\         /:/  /       \:\__\        |:|  |    
     \/__/         \/__/         \/__/         \|__|  
 
-version 1.0
 Made by Dimas Rizky
 https://github.com/desolaterobot/encr
     """
@@ -102,7 +100,7 @@ def keyName():
             return file
     return "[]"
 
-def modify(fileList, isEncrypting, password):
+def modify(fileList, isEncrypting: bool, password):
     #get the key from the key.key file
     if(password != 'select key'):
         key = None
@@ -130,9 +128,12 @@ def modify(fileList, isEncrypting, password):
 
     #loop through the list of files
     count = 1
+    totalSize = 0
     for file in fileList:
         t = time.time()
         size = os.path.getsize(currentDirectory + "/" + file) / 1024 #size in KB
+        size2 = size
+        totalSize += size
         unit = "KB"
         # if size is more than 1024KB, use MB as units instead, divide by 1024
         if size >= 1024:
@@ -145,6 +146,15 @@ def modify(fileList, isEncrypting, password):
         # ^^ figuring out which unit to use and what number to display
         print(f"processing {file}")
         print(f"size: {round(size, 3)}{unit}")
+
+        if isEncrypting:
+            if (file.startswith('gAAAAAB')):
+                print(Fore.GREEN + "ALREADY ENCRYPTED\n" + Style.RESET_ALL)
+                continue
+        else:
+            if not (file.startswith('gAAAAAB')):
+                print(Fore.GREEN + "ALREADY DECRYPTED\n" + Style.RESET_ALL)
+                continue
 
         with open(currentDirectory + "/" + file, "rb") as thefile: # open file, read binary mode
             contents = thefile.read() # read contents
@@ -179,7 +189,8 @@ def modify(fileList, isEncrypting, password):
                 continue
 
         print(f"files processed: {count}/{len(fileList)}")
-        print(f"time taken: {round(time.time() - t, 4)} seconds\n")
+        print(f"time taken: {round(time.time() - t, 4)} seconds")
+        print(f"processing speed: {round(size2/(time.time()-t), 4)} KB/s\n")
         count += 1
     
     #calculating time, along with the units
@@ -191,35 +202,68 @@ def modify(fileList, isEncrypting, password):
     if totalTime > 60:
         totalTime / 60
         timeUnits = "hours"
-    print(f"total time taken: {round(totalTime, 3)} {timeUnits}\n")
+    print(f"total time taken: {round(totalTime, 3)} {timeUnits}")
+    print(f'average processing speed: {round(totalSize/(time.time() - TT))} KB/s\n')
 
 def listFilesDecr(fileList, key):
-    #translate filenames only
+    tupleList = list()
     x = 0;
     for file in fileList:
-        print(f'{x}. {Fernet(key).decrypt(file.encode()).decode()}')
+        decryptedName = Fernet(key).decrypt(file.encode()).decode()
+        print(f'{x}. {decryptedName}')
+        tupleList.append((file, decryptedName))
         x+=1
+    while True:
+        inp = input("\nEnter the index of the single item to decrypt ('c' to cancel): ")
+        if inp == 'c' or inp == 'C':
+            break
+        try:
+            inp = int(inp)
+            if inp < 0 or inp >= len(tupleList):
+                print('invalid index.')
+                continue
+        except:
+            print('enter a whole number.')
+            continue
+        print(f'decrypting single item: {tupleList[inp][1]}')
+
+        contents = open(currentDirectory + "/" + tupleList[inp][0], "rb").read()
+        decrypted = Fernet(key).decrypt(contents)
+        open(currentDirectory + "/" + tupleList[inp][0], "wb").write(decrypted)
+        os.rename(currentDirectory + "/" + tupleList[inp][0], currentDirectory + "/" + tupleList[inp][1])
+        os.startfile(currentDirectory + '/' + tupleList[inp][1])
+
+        while True:
+            cont = input('Type "r" to re-encrypt this file. Make sure you close it before proceeding.\n')
+            if not (cont == 'r' or cont == 'R'):
+                continue
+            break
+
+        contents = open(currentDirectory + "/" + tupleList[inp][1], "rb").read()
+        encrypted = Fernet(key).encrypt(contents)
+        open(currentDirectory + "/" + tupleList[inp][1], "wb").write(encrypted)
+        os.rename(currentDirectory + "/" + tupleList[inp][1], currentDirectory + "/" + tupleList[inp][0])
     print()
 
 while(True):
     files = refresh()
     inp = input("\n>> ")
     print()
-    if inp == "show dir":
+    if inp == "show":
         root = tk.Tk()
         root.geometry("10x10")
         filedialog.asksaveasfilename(title="showing current target file", initialdir=currentDirectory)
         root.destroy()
         continue
-    if inp.startswith("encrypt"):
-        password = inp[8::]
+    if inp.startswith("encr"):
+        password = inp[5::]
         modify(files, True, password)
         continue
-    if inp.startswith("decrypt"):
-        password = inp[8::]
+    if inp.startswith("decr"):
+        password = inp[5::]
         modify(files, False, password)
         continue
-    if inp == "list files":
+    if inp == "list":
         print("These are the target files:")
         x = 0;
         for file in files:
@@ -227,7 +271,7 @@ while(True):
             x+=1
         print()
         continue
-    if inp == "list files decr":
+    if inp == "single":
         keyFile = None
         for file in os.listdir(currentDirectory): 
             if file.endswith('.key'): #key found inside directory
@@ -235,6 +279,8 @@ while(True):
         if keyFile == None:
             print("no key found here. opening file explorer.\n")
             key = browseFiles()
+            if key == None:
+                continue
         else:
             inp = input('confirm password: ')
             print()
@@ -249,7 +295,7 @@ while(True):
         passw = inp[8::]
         generateKey(passw)
         continue
-    if inp == "change dir":
+    if inp == "change":
         root = tk.Tk()
         root.geometry("10x10")
         cd = filedialog.askdirectory(title='select directory', initialdir=currentDirectory)
@@ -272,6 +318,7 @@ while(True):
         for file in files:
             os.remove(currentDirectory + "/" + file)
         print(f"Deleted {c} files in this directory.\n")
+        continue
     if inp == "del self":
         os.remove(__file__)
         break
