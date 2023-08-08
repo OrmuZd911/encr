@@ -1,6 +1,8 @@
 # encr: a simple tool to encrypt files.
 Note that the Python file in the repository is only to show the Python code within. Unless you are interested, it can be deleted.
 
+## THIS PROJECT IS A PRECURSOR TO [THOTHCRYPT]{https://github.com/desolaterobot/thoth}, WHICH IS A GRAPHICAL IMPROVED VERSION OF THIS PROJECT. CHECK THAT OUT INSTEAD!
+
 ## How to use?
 In order to encrypt files, we only need encr.exe and a .key file generated with encr.exe.
 Here's how you can encrypt your first files:
