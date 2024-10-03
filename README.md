@@ -70,3 +70,4 @@ Closes the window.
 #### always pay attention to target directory
 #### always use `list` to double check which files you are about to encrypt
 #### large files (above 1GB) have not been tested thorougly. encrypt at your own risk.
+debug 
